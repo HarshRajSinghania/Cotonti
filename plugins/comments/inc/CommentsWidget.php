@@ -79,8 +79,14 @@ class CommentsWidget extends BaseCommentsWidget
         if (COT_AJAX && Cot::$env['ext'] === 'comments' && isset($_GET['ci'])) {
             $ci = cot_import('ci', 'G', 'TXT');
             if (!empty($ci)) {
-                $ci = @unserialize(base64_decode($ci));
-                if (!empty($ci)) {
+                $ci = @unserialize(base64_decode($ci), ['allowed_classes' => false]);
+                if (
+                    is_array($ci)
+                    && array_key_exists(0, $ci)
+                    && is_string($ci[0])
+                    && array_key_exists(1, $ci)
+                    && is_array($ci[1])
+                ) {
                     $this->currentUrlExtension = $ci[0];
                     $this->currentUrlParams = $ci[1];
                 }
