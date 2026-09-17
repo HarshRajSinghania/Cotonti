@@ -84,9 +84,10 @@ if ($a === 'request' && $email !== '') {
             continue;
         }
 
+		// Security fix: use CSPRNG token; fixed variable name case (was $validationkey)
 		$validationKey = $user['user_lostpass'];
-		if (empty($validationkey) || $validationkey == '0') {
-            $validationKey = md5(microtime());
+		if (empty($validationKey) || $validationKey == '0') {
+            $validationKey = bin2hex(random_bytes(32));
 			Cot::$db->update(
                 Cot::$db->users,
                 ['user_lostpass' => $validationKey, 'user_lastip' => Cot::$usr['ip']],
