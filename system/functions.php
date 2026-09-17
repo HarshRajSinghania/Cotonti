@@ -6131,7 +6131,8 @@ function cot_url_modify($params = [], $tail = '', $htmlspecialcharsBypass = fals
 function cot_url_check($url)
 {
 	global $sys;
-	return preg_match('`^'.preg_quote($sys['scheme'].'://').'([\w\p{L}\.\-]+\.)?'.preg_quote($sys['domain']).'`ui', $url);
+	return preg_match('`^'.preg_quote($sys['scheme'].'://').'([\w\p{L}\.\-]+\.)?'.preg_quote($sys['domain']).'([/?#]|$)`ui', // Security fix: end-anchor prevents subdomain spoof (CWE-601)
+ $url);
 }
 
 /**
