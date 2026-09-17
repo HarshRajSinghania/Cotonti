@@ -128,7 +128,8 @@ class EditAction extends BaseAction
 
         // Comeback url params
         if (!empty($this->comeback)) {
-            $cbDecoded = unserialize(base64_decode($this->comeback));
+            // Security fix: restrict to plain arrays, prevents PHP Object Injection (CWE-502)
+        $cbDecoded = unserialize(base64_decode($this->comeback), ['allowed_classes' => false]);
             $this->cbExtensionCode = $cbDecoded[0];
             $this->cbUrlParams = $cbDecoded[1];
             $this->comeBackUrl = cot_url($this->cbExtensionCode, $this->cbUrlParams, '', true);
