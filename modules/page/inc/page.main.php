@@ -80,6 +80,10 @@ if (mb_substr($pag['page_text'], 0, 6) == 'redir:') {
 	$env['status'] = '303 See Other';
 	$redir = trim(str_replace('redir:', '', $pag['page_text']));
 	$sql_page_update = Cot::$db->query("UPDATE $db_pages SET page_filecount=page_filecount+1 WHERE page_id=$id");
+	// Security fix: block external redir: destinations not belonging to this site (CWE-601)
+	if (preg_match('#^(http|ftp)s?://#', $redir) && !cot_url_check($redir)) {
+		cot_die_message(403);
+	}
 	header('Location: ' . (preg_match('#^(http|ftp)s?://#', $redir) ? '' : COT_ABSOLUTE_URL) . $redir);
 	exit;
 } elseif (mb_substr($pag['page_text'], 0, 8) == 'include:') {
