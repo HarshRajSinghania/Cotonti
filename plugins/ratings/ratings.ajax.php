@@ -28,7 +28,10 @@ $newrate = (!empty($newrate)) ? $newrate : 0;
 $enabled = cot_ratings_enabled($area, $cat, $code);
 list($auth_read, $auth_write, $auth_admin) = cot_auth('plug', 'ratings');
 
-if ($inr == 'send' && $newrate >= 0 && $newrate <= 10 && $auth_write && $enabled)
+// Security fix: CSRF guard for rating submission (CWE-352)
+	cot_check_xg();
+
+	if ($inr == 'send' && $newrate >= 0 && $newrate <= 10 && $auth_write && $enabled)
 {
 	// Get current item rating
 	$sql = $db->query("SELECT * FROM $db_ratings
