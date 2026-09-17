@@ -26,6 +26,9 @@ $rcontact = [
     'contact_email' => '',
     'contact_subject' => '',
 ];
+// Security fix: CSRF guard (CWE-352) — prevents forged contact form submissions
+cot_check_xg();
+
 if (!empty($rtext)) {
 	//Import the variables
 	$rcontact['contact_text'] = $rtext;
