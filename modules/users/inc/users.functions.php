@@ -94,7 +94,7 @@ function cot_add_user($ruser, $email = null, $name = null, $password = null, $ma
 		}
 	}
 
-	$ruser['user_lostpass'] = md5(microtime());
+	$ruser['user_lostpass'] = \cot\users\UsersHelper::newValidationToken();
 	cot_shield_update(20, "Registration");
 
 	$ruser['user_hideemail'] = 1;

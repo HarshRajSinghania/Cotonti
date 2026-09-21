@@ -165,7 +165,7 @@ if ($a === 'request' && $email !== '') {
         cot_redirect(cot_url('message', ['msg' => 153, 'num' => $user['user_banexpire']], '', true));
     }
 
-    $validationKey = md5(microtime());
+    $validationKey = UsersHelper::newValidationToken();
     $newPassword = cot_randomstring();
     $updateData = [
         'user_passsalt' => cot_unique(16),

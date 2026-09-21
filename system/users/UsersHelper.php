@@ -103,4 +103,20 @@ class UsersHelper
 
         return cot_url('users', $params, $tail, $htmlspecialcharsBypass);
     }
+
+    /**
+     * Generates a random token for the `user_lostpass` field.
+     *
+     * That field is the one-time secret used by password recovery, e-mail change confirmation and registration
+     * validation. The value comes from a CSPRNG (128 bits, hex encoded).
+     *
+     * The length is fixed at 32 characters on purpose: `user_lostpass` is char(32) and the handlers in
+     * users.passrecover.php and users.register.php only accept a `v` parameter of exactly 32 characters.
+     *
+     * @return string 32 hexadecimal characters
+     */
+    public static function newValidationToken(): string
+    {
+        return bin2hex(random_bytes(16));
+    }
 }

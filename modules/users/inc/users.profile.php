@@ -113,7 +113,7 @@ if ($a == 'update') {
 
 		if (!cot_error_found()) {
 			if (!Cot::$cfg['users']['user_email_noprotection']) {
-				$validationkey = md5(microtime());
+				$validationkey = \cot\users\UsersHelper::newValidationToken();
                 Cot::$db->update(Cot::$db->users, array(
                     'user_email' => $ruseremail,
                     'user_lostpass' => $validationkey,
