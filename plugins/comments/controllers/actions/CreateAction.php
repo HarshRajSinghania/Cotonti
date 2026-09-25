@@ -50,7 +50,7 @@ class CreateAction extends BaseAction
         // Commented Item url params
         $ciExtensionCode = $ciUrlParams = null;
         if (!empty($ci)) {
-            $ci = unserialize(base64_decode($ci));
+            $ci = unserialize(base64_decode($ci), ['allowed_classes' => false]);
             $ciExtensionCode = $ci[0];
             $ciUrlParams = $ci[1];
             if (empty($extensionCode)) {

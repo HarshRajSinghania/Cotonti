@@ -1,4 +1,4 @@
-<FilesMatch "\.(dat|php)$">
+<FilesMatch "\.(dat|php|php[3-8]?|phtml|phtm|pht|phps|phar|shtml|shtm|cgi|pl|htaccess|htm|html|xhtml|svg)$">
 order deny,allow
 deny from all
 </FilesMatch>

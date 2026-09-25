@@ -305,7 +305,7 @@ if (isset(Cot::$cfg['legacyMode']) && Cot::$cfg['legacyMode']) {
     // @deprecated in 0.9.24
     $t->assign([
         'LIST_CAT' => $c,
-        'LIST_CATTITLE' => $cat['title'],
+        'LIST_CATTITLE' => htmlspecialchars($cat['title']),
         'LIST_CATEGORY' => htmlspecialchars($cat['title']),
         'LIST_CATPATH' => $catpath,
         'LIST_CATSHORTPATH' => $catpath_short,
@@ -436,7 +436,7 @@ foreach ($subcat as $x) {
         $t->assign([
             'LIST_ROWCAT_ID' => $structure['page'][$x]['id'],
             'LIST_ROWCAT_URL' => cot_url('page', $sub_url_path),
-            'LIST_ROWCAT_TITLE' => $structure['page'][$x]['title'],
+            'LIST_ROWCAT_TITLE' => htmlspecialchars($structure['page'][$x]['title']),
             'LIST_ROWCAT_DESC' => $structure['page'][$x]['desc'],
             'LIST_ROWCAT_ICON' => $structure['page'][$x]['icon'],
             'LIST_ROWCAT_COUNT' => $subCategoriesCount,

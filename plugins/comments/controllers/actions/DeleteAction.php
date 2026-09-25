@@ -61,7 +61,7 @@ class DeleteAction extends BaseAction
         // Comeback url params
         $cbExtensionCode = $cbUrlParams = null;
         if (!empty($cb)) {
-            $cb = unserialize(base64_decode($cb));
+            $cb = unserialize(base64_decode($cb), ['allowed_classes' => false]);
             $cbExtensionCode = $cb[0];
             $cbUrlParams = $cb[1];
         }

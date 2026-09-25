@@ -80,7 +80,7 @@ if ($a == 'add') {
 	if (mb_strlen($ruser['user_name']) < 2) {
         cot_error('aut_usernametooshort', 'rusername');
     }
-	if (mb_strlen($rpassword1) < 4) {
+	if (mb_strlen($rpassword1) < 8) {
         cot_error('aut_passwordtooshort', 'rpassword1');
     }
 	if (!cot_check_email($ruser['user_email']))	{

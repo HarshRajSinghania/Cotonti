@@ -421,7 +421,7 @@ if (!empty($csid) || !empty($_SESSION[$sys['site_id']])) {
 				$usr['scheme'] = $cfg['forcedefaulttheme'] ? $cfg['defaultscheme'] : $row['user_scheme'];
 				$usr['lang'] = $cfg['forcedefaultlang'] ? $cfg['defaultlang'] : $row['user_lang'];
 				$usr['newpm'] = !empty($row['user_newpm']) ? $row['user_newpm'] : false;
-				$usr['auth'] = isset($row['user_auth']) ? unserialize($row['user_auth']) : null;
+				$usr['auth'] = isset($row['user_auth']) ? unserialize($row['user_auth'], ['allowed_classes' => false]) : null;
 				$usr['adminaccess'] = cot_auth('admin', 'any', 'R');
 				$usr['level'] = $cot_groups[$usr['maingrp']]['level'];
                 $usr['groups'] = &$row['groups'];

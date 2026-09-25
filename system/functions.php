@@ -1489,12 +1489,12 @@ function cot_title($mask, $params = [], $escape = true)
  */
 function cot_unique($length = 16)
 {
-	$string = sha1(mt_rand());
+	$string = sha1(random_bytes(16));
 	if ($length > 40)
 	{
 		for ($i=0; $i < floor($length / 40); $i++)
 		{
-			$string .= sha1(mt_rand());
+			$string .= sha1(random_bytes(16));
 		}
 	}
 	return(substr($string, 0, $length));
@@ -6131,7 +6131,7 @@ function cot_url_modify($params = [], $tail = '', $htmlspecialcharsBypass = fals
 function cot_url_check($url)
 {
 	global $sys;
-	return preg_match('`^'.preg_quote($sys['scheme'].'://').'([\w\p{L}\.\-]+\.)?'.preg_quote($sys['domain']).'`ui', $url);
+	return preg_match('`^'.preg_quote($sys['scheme'].'://').'([\w\p{L}\.\-]+\.)?'.preg_quote($sys['domain']).'(/|:\d|\?|\#|$)`ui', $url);
 }
 
 /**

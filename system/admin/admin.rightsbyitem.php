@@ -34,6 +34,7 @@ foreach (cot_getextplugins('admin.rightsbyitem.first') as $pl) {
 /* ===== */
 
 if ($a == 'update') {
+	cot_check_xg();
 	$mask = [];
 	$auth = cot_import('auth', 'P', 'ARR');
     $items = cot_import('items', 'P', 'TXT');
@@ -153,6 +154,7 @@ $sql->closeCursor();
 $is_adminwarnings = isset($adminwarnings);//TODO: May by need deprecate adminwarnings ?
 
 $urlParams = ['m' => 'rightsbyitem', 'ic' => $ic, 'io' => $io, 'a' => 'update',];
+$urlParams['x'] = Cot::$sys['xk'];
 if ($advanced) {
     $urlParams['advanced'] = 1;
 }

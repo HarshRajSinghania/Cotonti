@@ -85,8 +85,8 @@ if ($a === 'request' && $email !== '') {
         }
 
 		$validationKey = $user['user_lostpass'];
-		if (empty($validationkey) || $validationkey == '0') {
-            $validationKey = md5(microtime());
+		if (empty($validationKey) || $validationKey == '0') {
+            $validationKey = bin2hex(random_bytes(16));
 			Cot::$db->update(
                 Cot::$db->users,
                 ['user_lostpass' => $validationKey, 'user_lastip' => Cot::$usr['ip']],
@@ -165,7 +165,7 @@ if ($a === 'request' && $email !== '') {
         cot_redirect(cot_url('message', ['msg' => 153, 'num' => $user['user_banexpire']], '', true));
     }
 
-    $validationKey = md5(microtime());
+    $validationKey = bin2hex(random_bytes(16));
     $newPassword = cot_randomstring();
     $updateData = [
         'user_passsalt' => cot_unique(16),

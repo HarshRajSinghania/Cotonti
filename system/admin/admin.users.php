@@ -90,6 +90,7 @@ elseif($n == 'edit')
 {
 	if($a == 'update')
 	{
+		cot_check_xg();
 		$rgroups['grp_name'] = cot_import('rname', 'P', 'TXT');
 		$rgroups['grp_title'] = cot_import('rtitle', 'P', 'TXT');
 		$rgroups['grp_desc'] = cot_import('rdesc', 'P', 'TXT');
@@ -171,7 +172,7 @@ elseif($n == 'edit')
 		$t->assign([
             'ADMIN_USERS_GRP_NAME' => $row['grp_name'],
             'ADMIN_USERS_GRP_TITLE' => $row['grp_title'],
-			'ADMIN_USERS_EDITFORM_URL' => cot_url('admin', 'm=users&n=edit&a=update&g='.$g),
+			'ADMIN_USERS_EDITFORM_URL' => cot_url('admin', 'm=users&n=edit&a=update&g='.$g.'&'.cot_xg()),
 			'ADMIN_USERS_EDITFORM_GRP_NAME' => cot_inputbox('text', 'rname', $row['grp_name'], 'size="40" maxlength="64"'),
 			'ADMIN_USERS_EDITFORM_GRP_TITLE' => cot_inputbox('text', 'rtitle', $row['grp_title'], 'size="40" maxlength="64"'),
 			'ADMIN_USERS_EDITFORM_GRP_DESC' => cot_inputbox('text', 'rdesc', htmlspecialchars($row['grp_desc']), 'size="40" maxlength="64"'),

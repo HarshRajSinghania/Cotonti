@@ -25,6 +25,7 @@ if (!empty($highlight) && !defined('COT_ADMIN')) {
 	}
 
     $wordsToHighlight = implode('|', $highlight);
+    $wordsToHighlightJson = json_encode($wordsToHighlight, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE);
     $contentNodeSelector = isset(Cot::$R['content_container_selector'])
         ? str_replace("'", "\'", Cot::$R['content_container_selector'])
         : 'body';
@@ -33,7 +34,7 @@ if (!empty($highlight) && !defined('COT_ADMIN')) {
 <<<JS
 let contentNode = document.querySelector('{$contentNodeSelector}');
 if (contentNode !== null) {
-    highlightWords(contentNode, new RegExp('{$wordsToHighlight}', "gi"));
+    highlightWords(contentNode, new RegExp({$wordsToHighlightJson}, "gi"));
 }
 JS
     );

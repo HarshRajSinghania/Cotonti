@@ -14,7 +14,7 @@
  */
 defined('COT_CODE') or die('Wrong URL');
 
-$tplfile = cot_import('tpl', 'G', 'TXT');
+$tplfile = preg_replace('#[^\w\-]#', '', (string)cot_import('tpl', 'G', 'TXT'));
 $mskin = cot_tplfile(['contact', $tplfile], 'plug');
 $t = new XTemplate($mskin);
 $rtext = cot_import('rtext', 'P', 'TXT');

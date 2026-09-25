@@ -157,7 +157,7 @@ if ($a === 'upload') {
 			}
 			$u_sqlname = Cot::$db->prep($u_newname);
 
-            if (!in_array($f_extension, ['php', 'php3', 'php4', 'php5'])) {
+            if (!in_array(mb_strtolower($f_extension), ['php', 'php3', 'php4', 'php5', 'php7', 'php8', 'phtml', 'phtm', 'pht', 'phps', 'phar', 'shtml', 'shtm', 'cgi', 'htaccess'])) {
 				foreach ($cot_extensions as $k => $line) {
 					if (mb_strtolower($f_extension) == $line[0]) {
                         $f_extension_ok = 1;

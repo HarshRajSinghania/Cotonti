@@ -136,6 +136,7 @@ if (empty($n) || in_array($n, $extra_blacklist)) {
     $redirectUrl = cot_url('admin', ['m' => 'extrafields', 'n' => $n, 'd' => $durl,], '', true);
 
 	if ($a == 'add' && !empty($_POST)) {
+		cot_check_xg();
 		$field['field_name'] = cot_import('field_name', 'P', 'TXT');
 		$field['field_type'] = cot_import('field_type', 'P', 'ALP');
 		$field['field_html'] = cot_import('field_html', 'P', 'NOC');
@@ -192,6 +193,7 @@ if (empty($n) || in_array($n, $extra_blacklist)) {
         cot_redirect($redirectUrl);
 
     } elseif ($a == 'upd' && !empty($_POST)) {
+		cot_check_xg();
 		$field_name = cot_import('field_name', 'P', 'ARR');
 		$field_type = cot_import('field_type', 'P', 'ARR');
 		$field_html = cot_import('field_html', 'P', 'ARR');
@@ -385,7 +387,7 @@ if (empty($n) || in_array($n, $extra_blacklist)) {
     }
 
 	$t->assign([
-		'ADMIN_EXTRAFIELDS_URL_FORM_EDIT' => cot_url('admin', 'm=extrafields&n='.$n.'&a=upd&d='.$durl),
+		'ADMIN_EXTRAFIELDS_URL_FORM_EDIT' => cot_url('admin', 'm=extrafields&n='.$n.'&a=upd&'.cot_xg().'&d='.$durl),
 		'ADMIN_EXTRAFIELDS_NAME' => cot_inputbox('text', 'field_name', '', 'class="exfldname"'),
 		'ADMIN_EXTRAFIELDS_DESCRIPTION' => cot_textarea('field_description', '', 1, 30, 'class="exflddesc"'),
 		'ADMIN_EXTRAFIELDS_SELECT' => cot_selectbox('input', 'field_type', $field_types, $field_types, false, 'class="exfldtype"'),
@@ -400,7 +402,7 @@ if (empty($n) || in_array($n, $extra_blacklist)) {
             'class="exfldrequired"'
         ),
 		'ADMIN_EXTRAFIELDS_PARSE' => cot_selectbox('HTML', 'field_parse', $parse_type, [Cot::$L['Default'], Cot::$L['No']], false, 'class="exfldparse"'),
-		'ADMIN_EXTRAFIELDS_URL_FORM_ADD' => cot_url('admin', 'm=extrafields&n='.$n.'&a=add&d='.$durl),
+		'ADMIN_EXTRAFIELDS_URL_FORM_ADD' => cot_url('admin', 'm=extrafields&n='.$n.'&a=add&'.cot_xg().'&d='.$durl),
 		'ADMIN_EXTRAFIELDS_PAGINATION_PREV' => $pagenav['prev'],
 		'ADMIN_EXTRAFIELDS_PAGNAV' => $pagenav['main'],
 		'ADMIN_EXTRAFIELDS_PAGINATION_NEXT' => $pagenav['next'],

@@ -198,12 +198,12 @@ foreach ($sql->fetchAll() as $row) {
 
 	if ($info) {
 		$adminPath[] = [cot_url('admin', 'm=other&p=trashcan&a=info&id='.$id), $row['tr_title']];
-		$data = unserialize($row['tr_datas']);
+		$data = unserialize($row['tr_datas'], ['allowed_classes' => false]);
 		if (!empty($data)) {
 			foreach ($data as $key => $val) {
 				$tr_t->assign([
 					'ADMIN_TRASHCAN_INFO_ROW' => htmlspecialchars($key),
-					'ADMIN_TRASHCAN_INFO_VALUE' => $val,
+					'ADMIN_TRASHCAN_INFO_VALUE' => htmlspecialchars((string)$val),
 				]);
 				$tr_t->parse('MAIN.TRASHCAN_ROW.TRASHCAN_INFOROW');
 			}

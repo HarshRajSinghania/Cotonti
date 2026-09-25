@@ -77,7 +77,10 @@ switch ($msg) {
 	case '404':
 	case '500':
 		$rd = 5;
-		$ru = empty($redirect) ? '' : str_replace('&', '&amp;', base64_decode($redirect));
+		$ruDecoded = empty($redirect) ? '' : base64_decode($redirect);
+		$ru = (!empty($ruDecoded) && (preg_match('#^/[^/]#', $ruDecoded) || cot_url_check($ruDecoded)))
+			? str_replace('&', '&amp;', $ruDecoded)
+			: '';
 		break;
 
 	/* ======== System messages ======== */
@@ -102,7 +105,7 @@ switch ($msg) {
 		$lng = cot_import('lng', 'G', 'TXT');
 		if (!empty($lng)) {
 			// Assign custom message
-            $body = isset($L[$lng]) ? $L[$lng] : $lng;
+            $body = isset($L[$lng]) ? $L[$lng] : htmlspecialchars($lng);
 		}
 		$rc = '920';
 		break;
@@ -202,7 +205,12 @@ if ($msg == '920') {
 	$confirm_no_url = preg_match("/^.+" . preg_quote($sys['domain']."/"), $_SERVER['HTTP_REFERER']) ?
         str_replace('&', '&amp;', $_SERVER['HTTP_REFERER']) : cot_url('index');
 
-	if (preg_match('#[ "\':]#', base64_decode($redirect))) {
+	$redirectDecoded = base64_decode($redirect);
+	if (
+		preg_match('#[ "\':]#', $redirectDecoded)
+		|| mb_substr($redirectDecoded, 0, 2) === '//'
+		|| (!empty($redirectDecoded) && !preg_match('#^/[^/]#', $redirectDecoded) && !cot_url_check($redirectDecoded))
+	) {
 		$redirect = '';
 	}
 

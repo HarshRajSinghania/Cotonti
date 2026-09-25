@@ -53,6 +53,7 @@ switch ($n) {
 		/* ===== */
 
 		if ($a == 'update' && !empty($_POST)) {
+			cot_check_xg();
 			$updated = cot_config_update_options($p, $optionslist, $o);
 			$errors = cot_get_messages('', 'error');
 
@@ -171,7 +172,7 @@ switch ($n) {
 		$t->assign([
 			'ADMIN_CONFIG_FORM_URL' => cot_url(
                 'admin',
-                ['m' => 'config', 'n' => 'edit', 'o' => $o, 'p' => $p, 'a' => 'update']
+                ['m' => 'config', 'n' => 'edit', 'o' => $o, 'p' => $p, 'a' => 'update', 'x' => Cot::$sys['xk']]
             ),
 		]);
 

@@ -51,6 +51,7 @@ foreach (cot_getextplugins('admin.rights.first') as $pl) {
 /* ===== */
 
 if ($a == 'update') {
+	cot_check_xg();
 	$ncopyrightsconf = cot_import('ncopyrightsconf', 'P', 'BOL');
 	$ncopyrightsfrom = cot_import('ncopyrightsfrom', 'P', 'INT');
     $auth = cot_import('auth', 'P', 'ARR');
@@ -146,6 +147,7 @@ $adminTitle = Cot::$L['Rights'];
 
 $adv_columns = ($advanced) ? 8 : 4;
 $urlParams = ['m' => 'rights', 'g' => $g, 'a' => 'update'];
+$urlParams['x'] = Cot::$sys['xk'];
 if ($advanced) {
     $urlParams['advanced'] = 1;
 }

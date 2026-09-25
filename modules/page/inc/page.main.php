@@ -80,7 +80,15 @@ if (mb_substr($pag['page_text'], 0, 6) == 'redir:') {
 	$env['status'] = '303 See Other';
 	$redir = trim(str_replace('redir:', '', $pag['page_text']));
 	$sql_page_update = Cot::$db->query("UPDATE $db_pages SET page_filecount=page_filecount+1 WHERE page_id=$id");
-	header('Location: ' . (preg_match('#^(http|ftp)s?://#', $redir) ? '' : COT_ABSOLUTE_URL) . $redir);
+	if (preg_match('#^(http|ftp)s?://#', $redir)) {
+		if (!cot_url_check($redir)) {
+			cot_log('Blocked off-site page redir: target', 'sec', 'page', 'error');
+			cot_die_message(403, TRUE);
+		}
+		header('Location: ' . $redir);
+	} else {
+		header('Location: ' . COT_ABSOLUTE_URL . ltrim($redir, '/'));
+	}
 	exit;
 } elseif (mb_substr($pag['page_text'], 0, 8) == 'include:') {
 	$pag['page_text'] = cot_readraw('datas/html/'.trim(mb_substr($pag['page_text'], 8, 255)));
