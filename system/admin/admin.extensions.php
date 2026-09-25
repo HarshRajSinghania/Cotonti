@@ -121,6 +121,7 @@ switch($a) {
 
 		switch($b) {
 			case 'install':
+				cot_check_xg();
 				$installed_modules = $db->query("SELECT ct_code FROM $db_core WHERE ct_plug = 0")->fetchAll(PDO::FETCH_COLUMN);
 				$installed_plugins = $db->query("SELECT ct_code FROM $db_core WHERE ct_plug = 1")->fetchAll(PDO::FETCH_COLUMN);
 				$dependencies_satisfied = cot_extension_dependencies_statisfied($code, $is_module, $installed_modules, $installed_plugins);
@@ -130,6 +131,7 @@ switch($a) {
 			break;
 
 			case 'update':
+				cot_check_xg();
 				$result = cot_extension_install($code, $is_module, true, true);
 				break;
 
@@ -182,21 +184,25 @@ switch($a) {
 				break;
 
 			case 'pause':
+                cot_check_xg();
                 $extensionControlService->pause($code);
 				cot_message('adm_paused');
 				break;
 
 			case 'unpause':
+                cot_check_xg();
                 $extensionControlService->resume($code);
 				cot_message('adm_running');
 				break;
 
 			case 'pausepart':
+                cot_check_xg();
                 $extensionControlService->pause($code, $part);
 				cot_message('adm_partstopped');
 				break;
 
 			case 'unpausepart':
+                cot_check_xg();
                 $extensionControlService->resume($code, $part);
 				cot_message('adm_partrunning');
 				break;
@@ -499,12 +505,12 @@ switch($a) {
 
 					} elseif ($extensionPart['Status'] == 1) {
 						$t->assign('ADMIN_EXTENSIONS_DETAILS_ROW_PAUSEPART_URL',
-							cot_url('admin', "m=extensions&a=details&$arg=$code&b=pausepart&part=".$info_part));
+							cot_url('admin', "m=extensions&a=details&$arg=$code&b=pausepart&part=".$info_part."&x=".$sys['xk']));
 						$t->parse('MAIN.DETAILS.ROW_PART.ROW_PART_PAUSE');
 
 					} elseif($extensionPart['Status'] == 0) {
 						$t->assign('ADMIN_EXTENSIONS_DETAILS_ROW_UNPAUSEPART_URL',
-							cot_url('admin', "m=extensions&a=details&$arg=$code&b=unpausepart&part=".$info_part));
+							cot_url('admin', "m=extensions&a=details&$arg=$code&b=unpausepart&part=".$info_part."&x=".$sys['xk']));
 						$t->parse('MAIN.DETAILS.ROW_PART.ROW_PART_UNPAUSE');
 					}
 
@@ -560,12 +566,12 @@ switch($a) {
             'ADMIN_EXTENSIONS_JUMPTO_URL' => $extensionsService->getPublicPageUrl($code, $type),
             'ADMIN_EXTENSIONS_STRUCTURE_URL' => $structurePartUrl,
 			'ADMIN_EXTENSIONS_TOTALCONFIG' => $totalConfig,
-			'ADMIN_EXTENSIONS_INSTALL_URL' => cot_url('admin', "m=extensions&a=details&$arg=$code&b=install"),
-			'ADMIN_EXTENSIONS_UPDATE_URL' => cot_url('admin', "m=extensions&a=details&$arg=$code&b=update"),
+			'ADMIN_EXTENSIONS_INSTALL_URL' => cot_url('admin', "m=extensions&a=details&$arg=$code&b=install&x={$sys['xk']}"),
+			'ADMIN_EXTENSIONS_UPDATE_URL' => cot_url('admin', "m=extensions&a=details&$arg=$code&b=update&x={$sys['xk']}"),
 			'ADMIN_EXTENSIONS_UNINSTALL_URL' => cot_url('admin', "m=extensions&a=details&$arg=$code&b=uninstall"),
 			'ADMIN_EXTENSIONS_UNINSTALL_CONFIRM_URL' => cot_url('admin', "m=extensions&a=details&$arg=$code&b=uninstall&x={$sys['xk']}"),
-			'ADMIN_EXTENSIONS_PAUSE_URL' => cot_url('admin', "m=extensions&a=details&$arg=$code&b=pause"),
-			'ADMIN_EXTENSIONS_UNPAUSE_URL' => cot_url('admin', "m=extensions&a=details&$arg=$code&b=unpause"),
+			'ADMIN_EXTENSIONS_PAUSE_URL' => cot_url('admin', "m=extensions&a=details&$arg=$code&b=pause&x={$sys['xk']}"),
+			'ADMIN_EXTENSIONS_UNPAUSE_URL' => cot_url('admin', "m=extensions&a=details&$arg=$code&b=unpause&x={$sys['xk']}"),
 		]);
         if (isset(Cot::$cfg['legacyMode']) && Cot::$cfg['legacyMode']) {
             $t->assign([

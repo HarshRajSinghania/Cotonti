@@ -34,9 +34,11 @@ foreach (cot_getextplugins('referers.admin.first') as $pl) {
 /* ===== */
 
 if ($a == 'prune' && $usr['isadmin']) {
+	cot_check_xg();
 	Cot::$db->query("TRUNCATE $db_referers") ? cot_message('adm_ref_prune') : cot_error('Error');
 	cot_redirect(cot_url('admin', 'm=other&p=referers', '', true));
 } elseif ($a == 'prunelowhits' && $usr['isadmin']) {
+	cot_check_xg();
 	Cot::$db->delete($db_referers, 'ref_count < 6') ? cot_message('adm_ref_prunelowhits') : cot_error('Error');
 	cot_redirect(cot_url('admin', 'm=other&p=referers', '', true));
 }

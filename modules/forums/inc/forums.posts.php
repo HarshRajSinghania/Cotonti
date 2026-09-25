@@ -82,6 +82,7 @@ cot_block(Cot::$usr['auth_read']);
 $sys['sublocation'] = Cot::$structure['forums'][$s]['title'];
 
 if ($a == 'newpost' && !empty($s) && !empty($q)) {
+	cot_check_xg();
 	cot_shield_protect();
 
 	Cot::$db->query("SELECT ft_state FROM $db_forum_topics WHERE ft_id = $q")->fetchColumn() && cot_die();
@@ -570,7 +571,7 @@ if (
         $text = $rmsg['fp_text'];
     }
     $t->assign([
-        'FORUMS_POSTS_NEWPOST_SEND' => cot_url('forums', ['m' => 'posts', 'a' => 'newpost', 's' => $s, 'q' => $q]),
+        'FORUMS_POSTS_NEWPOST_SEND' => cot_url('forums', ['m' => 'posts', 'a' => 'newpost', 's' => $s, 'q' => $q, 'x' => Cot::$sys['xk']]),
         'FORUMS_POSTS_NEWPOST_TEXT' => Cot::$R['forums_code_newpost_mark'] .
             cot_textarea(
                 'rmsgtext',

@@ -55,6 +55,7 @@ if (empty($i18n_locale) || $i18n_locale == Cot::$cfg['defaultlang']) {
 } else {
 	// Structure translation for selected locale
 	if ($a == 'update' && $_SERVER['REQUEST_METHOD'] == 'POST') {
+		cot_check_xg();
 		// Update stucture translations
 		$codes = cot_import('code', 'P', 'ARR');
 		$titles = cot_import('title', 'P', 'ARR');
@@ -170,7 +171,7 @@ if (empty($i18n_locale) || $i18n_locale == Cot::$cfg['defaultlang']) {
 	$maxperpage, 'd', '', Cot::$cfg['jquery'] && Cot::$cfg['turnajax']);
 
 	$t->assign([
-		'I18N_ACTION' => cot_url('plug', 'e=i18n&m=structure&l='.$i18n_locale.'&a=update&d='.$durl),
+		'I18N_ACTION' => cot_url('plug', 'e=i18n&m=structure&l='.$i18n_locale.'&a=update&'.cot_xg().'&d='.$durl),
 		'I18N_ORIGINAL_LANG' => isset($i18n_locales[Cot::$cfg['defaultlang']]) ?
             $i18n_locales[Cot::$cfg['defaultlang']] : Cot::$cfg['defaultlang'],
 		'I18N_TARGET_LANG' => $i18n_locales[$i18n_locale],

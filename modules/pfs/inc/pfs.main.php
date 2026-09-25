@@ -116,6 +116,7 @@ $pfs_totalsize = Cot::$db->query(
 $err_msg = [];
 
 if ($a === 'upload') {
+	cot_check_xg();
 	$ndesc = cot_import('ndesc','P','ARR');
 
 	/* === Hook === */
@@ -286,6 +287,7 @@ if ($a === 'upload') {
 		$sql_pfs_delete = Cot::$db->delete($db_pfs, 'pfs_id=?', $id);
 	}
 } elseif ($a == 'newfolder') {
+	cot_check_xg();
 	$ntitle = cot_import('ntitle', 'P', 'TXT');
 	$ndesc = cot_import('ndesc', 'P', 'TXT');
 	$nispublic = cot_import('nispublic', 'P', 'BOL');
@@ -625,7 +627,7 @@ if (Cot::$usr['auth_write']) {
     $t->assign([
         'PFS_UPLOAD_FORM_MAX_SIZE' => $maxfile,
         'PFS_UPLOAD_FORM_USERID' => $userid,
-        'PFS_UPLOAD_FORM_ACTION' => cot_url('pfs', "f=$f&a=upload&$more"),
+        'PFS_UPLOAD_FORM_ACTION' => cot_url('pfs', "f=$f&a=upload&".cot_xg()."&$more"),
         //'PFS_UPLOAD_FORM_FOLDERS' => cot_selectbox_folders($userid, '', $f),
     ]);
 
@@ -656,7 +658,7 @@ foreach ($cot_extensions as $k => $line) {
 
 if (Cot::$usr['auth_write']) {
 	$t->assign([
-		'NEWFOLDER_FORM_ACTION' => cot_url('pfs', 'a=newfolder&' . $more),
+		'NEWFOLDER_FORM_ACTION' => cot_url('pfs', 'a=newfolder&' . cot_xg() . '&' . $more),
 		//'NEWFOLDER_FORM_INPUT_PARENT' => cot_selectbox_folders($userid, '', $f, 'nparentid'),
 	]);
 	$t->parse('MAIN.PFS_NEWFOLDER_FORM');

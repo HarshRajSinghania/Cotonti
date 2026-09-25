@@ -23,6 +23,7 @@ list($pg, $d, $durl) = cot_import_pagenav('d', Cot::$cfg['maxrowsperpage']);
 $rtext = cot_import('rtext', 'P', 'TXT');
 
 if ($a == 'del') {
+	cot_check_xg();
 	$sql_contact_delete = Cot::$db->query("SELECT * FROM $db_contact WHERE contact_id = $id LIMIT 1");
 
 	if ($row_contact_delete = $sql_contact_delete->fetch()) {
@@ -35,14 +36,17 @@ if ($a == 'del') {
 		cot_redirect(cot_url('admin', 'm=other&p=contact', '', true));
 	}
 } elseif ($a == 'val') {
+	cot_check_xg();
 	Cot::$db->update(Cot::$db->contact, ['contact_val' => 1], "contact_id = $id");
 	cot_message('Updated');
 	cot_redirect(cot_url('admin', 'm=other&p=contact', '', true));
 } elseif ($a == 'unval') {
+	cot_check_xg();
 	Cot::$db->update(Cot::$db->contact, ['contact_val' => 0], "contact_id = $id");
 	cot_message('Updated');
 	cot_redirect(cot_url('admin', 'm=other&p=contact', '', true));
 } elseif ($a == 'send' && $rtext != '') {
+	cot_check_xg();
 	$row = Cot::$db->query("SELECT contact_email FROM $db_contact WHERE contact_id = $id")->fetch();
 	cot_mail($row['contact_email'], Cot::$cfg['mainurl'], $rtext);
 	Cot::$db->update(Cot::$db->contact, ['contact_reply' => $rtext], "contact_id = $id");
@@ -91,12 +95,12 @@ foreach ($sql->fetchAll() as $row) {
             : htmlspecialchars($row['contact_author']),
 		'CONTACT_EMAIL' => htmlspecialchars($row['contact_email']),
 		'CONTACT_ID' => $row['contact_id'],
-		'CONTACT_DELLINK' => cot_confirm_url(cot_url('admin', 'm=other&p=contact&a=del&id=' . $row['contact_id'])),
+		'CONTACT_DELLINK' => cot_confirm_url(cot_url('admin', 'm=other&p=contact&a=del&id=' . $row['contact_id'] . '&' . cot_xg())),
 		'CONTACT_VIEWLINK' => $viewLink,
 		'CONTACT_VAL' => $val,
-		'CONTACT_VALLINK' => cot_url('admin', 'm=other&p=contact&a=' . $val . '&id=' . $row['contact_id']),
-		'CONTACT_READLINK' => cot_url('admin', 'm=other&p=contact&a=val&id=' . $row['contact_id']),
-		'CONTACT_UNREADLINK' => cot_url('admin', 'm=other&p=contact&a=unval&id=' . $row['contact_id']),
+		'CONTACT_VALLINK' => cot_url('admin', 'm=other&p=contact&a=' . $val . '&id=' . $row['contact_id'] . '&' . cot_xg()),
+		'CONTACT_READLINK' => cot_url('admin', 'm=other&p=contact&a=val&id=' . $row['contact_id'] . '&' . cot_xg()),
+		'CONTACT_UNREADLINK' => cot_url('admin', 'm=other&p=contact&a=unval&id=' . $row['contact_id'] . '&' . cot_xg()),
 		'CONTACT_SUBJECT' => htmlspecialchars($row['contact_subject']),
 		'CONTACT_TEXT' => htmlspecialchars($row['contact_text']),
 		'CONTACT_REPLY' => !empty($row['contact_reply']),
@@ -138,15 +142,15 @@ if (($a == '') && !empty($id)) {
             : htmlspecialchars($row['contact_author']),
 		'CONTACT_EMAIL' => htmlspecialchars($row['contact_email']),
 		'CONTACT_ID' => $row['contact_id'],
-		'CONTACT_DELLINK' => cot_url('admin', 'm=other&p=contact&a=del&id=' . $row['contact_id']),
+		'CONTACT_DELLINK' => cot_url('admin', 'm=other&p=contact&a=del&id=' . $row['contact_id'] . '&' . cot_xg()),
 		'CONTACT_VAL' => ($row['contact_val'] == 1) ? 'unval' : 'val',
-		'CONTACT_VALLINK' => cot_url('admin', 'm=other&p=contact&a=' . $val . '&id=' . $row['contact_id']),
-		'CONTACT_READLINK' => cot_url('admin', 'm=other&p=contact&a=val&id=' . $row['contact_id']),
-		'CONTACT_UNREADLINK' => cot_url('admin', 'm=other&p=contact&a=unval&id=' . $row['contact_id']),
+		'CONTACT_VALLINK' => cot_url('admin', 'm=other&p=contact&a=' . $val . '&id=' . $row['contact_id'] . '&' . cot_xg()),
+		'CONTACT_READLINK' => cot_url('admin', 'm=other&p=contact&a=val&id=' . $row['contact_id'] . '&' . cot_xg()),
+		'CONTACT_UNREADLINK' => cot_url('admin', 'm=other&p=contact&a=unval&id=' . $row['contact_id'] . '&' . cot_xg()),
 		'CONTACT_SUBJECT' => htmlspecialchars($row['contact_subject']),
 		'CONTACT_TEXT' => htmlspecialchars($row['contact_text']),
 		'CONTACT_REPLY' => $row['contact_reply'],
-		'CONTACT_FORM_SEND' => cot_url("admin", 'm=other&p=contact&a=send&id=' . $row['contact_id']),
+		'CONTACT_FORM_SEND' => cot_url("admin", 'm=other&p=contact&a=send&id=' . $row['contact_id'] . '&' . cot_xg()),
 		'CONTACT_FORM_TEXT' => cot_textarea('rtext', $rtext, 8, 64),
 	]);
 

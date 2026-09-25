@@ -37,6 +37,7 @@ $newpmrecipient = '';
 $fromstate = 0;
 $touser = '';
 if ($a == 'send') {
+	cot_check_xg();
 	cot_shield_protect();
 	$newpmtitle = cot_import('newpmtitle', 'P', 'TXT') ?: '';
 	$newpmtext = cot_import('newpmtext', 'P', 'HTM') ?: '';
@@ -241,7 +242,7 @@ $t->assign([
 	'PMSEND_SENTBOX' => cot_rc_link($url_sentbox, Cot::$L['pm_sentbox'], array('class' => Cot::$cfg['pm']['turnajax'] ? 'ajax' : '')),
 	'PMSEND_SENTBOX_URL' => $url_sentbox,
 	'PMSEND_SENTBOX_COUNT' => $totalsentbox,
-	'PMSEND_FORM_SEND' => cot_url('pm', 'm=send&a=send'.$idurl),
+	'PMSEND_FORM_SEND' => cot_url('pm', 'm=send&a=send'.$idurl.'&'.cot_xg()),
 	'PMSEND_FORM_TITLE' => cot_inputbox('text', 'newpmtitle', $newpmtitle, 'size="56" maxlength="255"'),
 	'PMSEND_FORM_TEXT' => cot_textarea('newpmtext', $newpmtext, 8, 56, '', 'input_textarea_editor'),
 	'PMSEND_FORM_TOUSER' => cot_textarea('newpmrecipient', $touser, 3, 56, 'class="userinput"'),

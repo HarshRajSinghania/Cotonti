@@ -23,6 +23,7 @@ $t = new XTemplate(cot_tplfile('autoalias2.admin', 'plug', true));
 $adminTitle = Cot::$L['AutoAlias2'];
 
 if ($a == 'create') {
+	cot_check_xg();
 	$count = 0;
 	$res = Cot::$db->query("SELECT page_id, page_title FROM $db_pages WHERE page_alias = ''");
 	foreach ($res->fetchAll() as $row) {
@@ -34,7 +35,7 @@ if ($a == 'create') {
 	cot_redirect(cot_url('admin', 'm=other&p=autoalias2', '', true));
 }
 
-$t->assign('AUTOALIAS_CREATE', cot_url('admin', 'm=other&p=autoalias2&a=create'));
+$t->assign('AUTOALIAS_CREATE', cot_url('admin', 'm=other&p=autoalias2&a=create&'.cot_xg()));
 
 cot_display_messages($t);
 

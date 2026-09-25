@@ -140,7 +140,11 @@ class EditAction extends BaseAction
 
         $comeBackUrl = cot_import('cbu', 'P', 'TXT');
         unset($_POST['cbu']);
-        if (!empty($comeBackUrl)) {
+        if (
+            !empty($comeBackUrl)
+            && mb_substr($comeBackUrl, 0, 2) !== '//'
+            && (preg_match('#^/[^/]#', $comeBackUrl) || cot_url_check($comeBackUrl))
+        ) {
             $this->comeBackUrl = $comeBackUrl;
             return;
         }

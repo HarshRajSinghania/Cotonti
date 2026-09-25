@@ -27,6 +27,7 @@ $rcontact = [
     'contact_subject' => '',
 ];
 if (!empty($rtext)) {
+	cot_check_xg();
 	//Import the variables
 	$rcontact['contact_text'] = $rtext;
 	$rcontact['contact_author'] = cot_import('ruser', 'P', 'TXT');
@@ -122,7 +123,7 @@ cot_display_messages($t);
 if (!$sent) {
 	$t->assign([
         'CONTACT_TITLE' => Cot::$L['contact_contactUs'],
-        'CONTACT_FORM_ACTION' => cot_url('plug', ['e' => 'contact', 'tpl' => $tplfile]),
+        'CONTACT_FORM_ACTION' => cot_url('plug', ['e' => 'contact', 'tpl' => $tplfile, 'x' => Cot::$sys['xk']]),
 		'CONTACT_FORM_AUTHOR' => (Cot::$usr['id'] == 0)
             ? cot_inputbox('text', 'ruser', $rcontact['contact_author'], 'maxlength="24"')
             : cot_inputbox('text', 'ruser', Cot::$usr['name'], 'maxlength="24" readonly="readonly"'),
@@ -134,7 +135,7 @@ if (!$sent) {
     if (isset(Cot::$cfg['legacyMode']) && Cot::$cfg['legacyMode']) {
         // @deprecated in 0.9.26
         $t->assign([
-            'CONTACT_FORM_SEND' => cot_url('plug', 'e=contact&tpl='.$tplfile),
+            'CONTACT_FORM_SEND' => cot_url('plug', 'e=contact&tpl='.$tplfile.'&'.cot_xg()),
         ]);
     }
 

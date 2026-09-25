@@ -286,6 +286,7 @@ if (empty($n)) {
 		cot_redirect(cot_url('admin', 'm=structure&n='.$n.'&mode='.$mode.'&d='.$durl, '', true));
 
     } elseif ($a == 'add' && !empty($_POST)) {
+		cot_check_xg();
 		$rstructure['structure_code'] = preg_replace('#[^\w\p{L}\-]#u', '', cot_import('rstructurecode', 'P', 'TXT'));
 		$rstructure['structure_path'] = cot_import('rstructurepath', 'P', 'TXT');
 		$rstructure['structure_title'] = cot_import('rstructuretitle', 'P', 'TXT');
@@ -732,7 +733,7 @@ if (empty($n)) {
 		$t->assign([
 			'ADMIN_STRUCTURE_URL_FORM_ADD' => cot_url(
                 'admin',
-                ['m' => 'structure', 'n' => $n, 'mode' => $mode, 'a' => 'add', 'd' => $durl]
+                ['m' => 'structure', 'n' => $n, 'mode' => $mode, 'a' => 'add', 'd' => $durl, 'x' => Cot::$sys['xk']]
             ),
 			'ADMIN_STRUCTURE_CODE' => cot_inputbox('text', 'rstructurecode', null),
 			'ADMIN_STRUCTURE_PATH' => cot_inputbox('text', 'rstructurepath', null, 'maxlength="16"'),

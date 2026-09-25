@@ -43,6 +43,7 @@ $parser_list = cot_get_parsers();
 Cot::$sys['parser'] = $row_page['page_parser'];
 
 if ($a == 'update') {
+	cot_check_xg();
 	/* === Hook === */
 	foreach (cot_getextplugins('page.edit.update.first') as $pl) {
 		include $pl;
@@ -137,7 +138,7 @@ $pageedit_array = [
 	'PAGEEDIT_PAGETITLE' => Cot::$L['page_edittitle'],
 	'PAGEEDIT_SUBTITLE' => Cot::$L['page_editsubtitle'],
     'PAGEEDIT_BREADCRUMBS' => cot_breadcrumbs($breadcrumbs, Cot::$cfg['homebreadcrumb']),
-	'PAGEEDIT_FORM_SEND' => cot_url('page', ['m' => 'edit', 'a' => 'update', 'id' => $pag['page_id']]),
+	'PAGEEDIT_FORM_SEND' => cot_url('page', ['m' => 'edit', 'a' => 'update', 'id' => $pag['page_id'], 'x' => Cot::$sys['xk']]),
 	'PAGEEDIT_FORM_ID' => $pag['page_id'],
 	'PAGEEDIT_FORM_STATE' => $pag['page_state'],
 	'PAGEEDIT_FORM_STATUS' => $pag['page_status'],

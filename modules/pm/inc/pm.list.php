@@ -37,6 +37,7 @@ if (is_array($msg) && count($msg) > 0) {
 		cot_remove_pm($msg);
 
 	} elseif (!empty($a)) {
+		cot_check_xg();
 		cot_star_pm($msg);
 		if (COT_AJAX && isset($id) && (int) $id > 0) {
 			die();
@@ -126,7 +127,7 @@ foreach ($pm_sql->fetchAll() as $row) {
 		$star_class = ($row['pm_tostate'] == 2) ? 1 : 0;
 	}
 
-    $url_star = cot_url('pm', 'f='.$f.'&filter='.$filter.'&a=star&id='.$row['pm_id'].'&d='.$durl);
+    $url_star = cot_url('pm', 'f='.$f.'&filter='.$filter.'&a=star&'.cot_xg().'&id='.$row['pm_id'].'&d='.$durl);
     $url_edit = '';
     if ($row['pm_fromuserid'] == Cot::$usr['id'] && $row['pm_tostate'] == COT_PM_STATE_UNREAD) {
         $url_edit = cot_url('pm', ['m' => 'send', 'id' => $row['pm_id']]);

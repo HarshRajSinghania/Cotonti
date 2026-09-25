@@ -31,6 +31,7 @@ Cot::$sys['parser'] = Cot::$cfg['page']['parser'];
 $parser_list = cot_get_parsers();
 
 if ($a == 'add') {
+	cot_check_xg();
 	cot_shield_protect();
 
 	/* === Hook === */
@@ -172,7 +173,7 @@ $pageadd_array = [
     'PAGEADD_BREADCRUMBS' => cot_breadcrumbs($breadcrumbs, Cot::$cfg['homebreadcrumb']),
 	'PAGEADD_SUBTITLE'  => Cot::$L['page_addsubtitle'],
 	'PAGEADD_ADMINEMAIL' => 'mailto:' . Cot::$cfg['adminemail'],
-	'PAGEADD_FORM_SEND' => cot_url('page', 'm=add&a=add&c=' . $c),
+	'PAGEADD_FORM_SEND' => cot_url('page', 'm=add&a=add&c=' . $c . '&' . cot_xg()),
 	'PAGEADD_FORM_CAT' => cot_selectbox_structure('page', $rpage['page_cat'], 'rpagecat'),
 	'PAGEADD_FORM_CAT_SHORT' => cot_selectbox_structure('page', $rpage['page_cat'], 'rpagecat', $c),
 	'PAGEADD_FORM_KEYWORDS' => cot_inputbox('text', 'rpagekeywords', $rpage['page_keywords'], ['maxlength' => '255']),

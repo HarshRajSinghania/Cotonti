@@ -90,6 +90,7 @@ if ($row = $sql_pfs->fetch()) {
 $breadcrumbs[] = htmlspecialchars($pfs_file) . ' (' . Cot::$L['Edit'] . ')';
 
 if ($a === 'update' && !empty($id)) {
+	cot_check_xg();
 	$rdesc = cot_import('rdesc','P','TXT');
 	$folderid = cot_import('folderid','P','INT');
 	if ($folderid>0) {
@@ -136,7 +137,7 @@ if ($standalone) {
 $t->assign([
 	'PFS_TITLE' => cot_breadcrumbs($breadcrumbs, $cfg['homebreadcrumb']),
     'PFS_BREADCRUMBS' => cot_breadcrumbs($breadcrumbs, Cot::$cfg['homebreadcrumb']),
-	'PFS_ACTION'=> cot_url('pfs', 'm=edit&a=update&id='.$pfs_id.'&'.$more),
+	'PFS_ACTION'=> cot_url('pfs', 'm=edit&a=update&'.cot_xg().'&id='.$pfs_id.'&'.$more),
 	'PFS_FILE' => htmlspecialchars($pfs_file),
 	'PFS_DATE' => cot_date('datetime_medium', $pfs_date),
 	'PFS_DATE_STAMP' => $pfs_date,
