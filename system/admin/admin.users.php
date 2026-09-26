@@ -136,6 +136,7 @@ elseif($n == 'edit')
 	}
 	elseif($a == 'delete' && $g > 5)
 	{
+		cot_check_xg();
 		$sql = $db->delete($db_groups, "grp_id='$g'");
 		$sql = $db->delete($db_groups_users, "gru_groupid='$g'");
 		cot_auth_remove_group($g);
